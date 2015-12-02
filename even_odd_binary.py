@@ -18,12 +18,19 @@
 # in binary numbers, last char of 1 is going to be False/Odd, 0 will be Even/True. Grab last char and use that to determine Odd/Even.
 number = int(raw_input("Give me an integer."))
 print "your number is: ", number
-print "{0:b}".format(number)
-answer = bool("{0:b}".format(number))
+#convert raw input number to a binary 
+print '{0:08b}'.format(number)
+#typecast into string 
+binumber = '{0:08b}'.format(number)
+#grab last character which will indicate 1(odd)/0(even), and then convert to int 
+answer = bool(int(binumber[-1]))
+#example: binary strong of integer 8 will be '1000' which whill bool 'False' 
+# and we want to get '0' to indicate True even
+#since binary is 0/True/even and bool is 0/false, I used an if statement to fix.
 print "your bool answer is: ", answer
-if answer == True:
-    print "Number is even."
-elif answer == False:
-    print "Number is odd."
+if answer == False:
+	print "Number is even."
+elif answer == True:
+	print "Number is odd."
 else:
-    print "Not a valid entry."
+	print "Not a valid entry."
