@@ -2,7 +2,7 @@ import requests
 import json
 from json import load
 
-#Open a JSON result from querying LOCU api for restaurants.
+#Open a JSON result from querying LOCU API for restaurants within 5000 km of Hackbright's location.
 
 json1_file = open('json_string.json')
 json1_str = json1_file.read()
