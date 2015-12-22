@@ -2,6 +2,8 @@ import requests
 import json
 #from locu.api import VenueApiClient, MenuItemApiClient
 
+#note: this is incomplete. TODO: more inclusive search query and loop through results
+
 #we will want to post using r = requests.post(url, data=json.dumps(payload)) - json.dumps takes a python dictionary and treats it as JSON
 # try to use this code to do different kind of searches - substitute a variable/parameter into any part of this.
 # can take venue query parameter
