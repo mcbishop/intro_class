@@ -15,20 +15,15 @@ r = requests.post("https://api.locu.com/v2/venue/search/", data=json.dumps(desse
 #print b.content
 #print r.content
 
-# create a file for JSON results
-# out_file = open("test.json","w")
+# if using static data: open a json string containing results of a previous query
 
+# json1_file = open('json_string.json')
+# #change file to giant string
+# json1_str = json1_file.read()
+# #json.loads gives me a python dictionary
+# parsed_json = json.loads(json1_str)
 
-# #put results into file
-
-# json.dump(r,out_file)    
-
-# Open a JSON result from querying LOCU api for restaurants.
-#json1_file = open('json_string.json')
-#change fle to giant string
-#json1_str = json1_file.read()
-#json.loads gives me a python dictionary
-#parsed_json = json.loads(json1_str)
+# else use results of live query
 parsed_json = json.loads(r.content)
 
 
@@ -37,19 +32,11 @@ all_venues = (parsed_json['venues'])
 
 
 def is_sugar(str):
-    # if string contains dessert or sweet or upper/lowercase, return True, with one exception for overly inclusive menu
+    # if string contains dessert or sweet or upper/lowercase, return True, with exceptions for overly inclusive menus
     result = (('dessert' in str.lower()) or ('sweet' in str.lower())) and ('salad' not in str.lower() and ('wine' not in str.lower()))
    #print "                [", str.encode('ascii', 'ignore'), ']    ', result
     return result
 
-
-
-#write a function that, given a subsection object, returns list of strings
-
-all_menu_desserts = []
-all_section_desserts = []
-all_subsection_desserts = []
-all_contents_desserts = []
 
 
 for venue in all_venues:
@@ -102,17 +89,9 @@ for venue in all_venues:
                                                     print'                ', content['price'].encode('ascii', 'ignore')
                                             all_contents_desserts.append(content)
 
-# # print all_menu_desserts
-# # print all_section_desserts
-# print all_subsection_desserts
-# print all_contents_desserts
-
-        
-
-
-
 
 
         
+
 
 
