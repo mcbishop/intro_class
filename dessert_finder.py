@@ -2,21 +2,43 @@ import requests
 import json
 from json import load
 
-#Open a JSON result from querying LOCU API for restaurants within 5000 km of Hackbright's location.
 
-json1_file = open('json_string.json')
-json1_str = json1_file.read()
-parsed_json = json.loads(json1_str)
+#search for all restaurants within 5000 km of Hackbright location
+desserts = {"fields":["name","menus"],"venue_queries":[{"location":{"geo":{"$in_lat_lng_radius" :[37.788666,-122.411462,5000]}}}],"api_key":"f598a788f6c9151a539a11fa63085cda8ce2884b"}
+
+#testing: search for all restaurants with category of bakeries/dessert
+#bakeries = {"fields":["name","categories"],"venue_queries":[{"location":{"geo": {"$in_lat_lng_radius" : [37.788666,-122.411462,5000]}},"categories":{"str_id":"desserts"},"categories":{"str_id":"bakeries"}}],"api_key":"f598a788f6c9151a539a11fa63085cda8ce2884b"}
+
+r = requests.post("https://api.locu.com/v2/venue/search/", data=json.dumps(desserts))
+#b = requests.post("https://api.locu.com/v2/venue/search/", data=json.dumps(bakeries))
+
+#print b.content
+#print r.content
+
+# create a file for JSON results
+# out_file = open("test.json","w")
+
+
+# #put results into file
+
+# json.dump(r,out_file)    
+
+# Open a JSON result from querying LOCU api for restaurants.
+#json1_file = open('json_string.json')
+#change fle to giant string
+#json1_str = json1_file.read()
+#json.loads gives me a python dictionary
+#parsed_json = json.loads(json1_str)
+parsed_json = json.loads(r.content)
 
 
 #assign each level to a variable.
 all_venues = (parsed_json['venues'])
 
 
-
 def is_sugar(str):
     # if string contains dessert or sweet or upper/lowercase, return True, with one exception for overly inclusive menu
-    result = (('dessert' in str.lower()) or ('sweet' in str.lower())) and ('salad' not in str.lower())
+    result = (('dessert' in str.lower()) or ('sweet' in str.lower())) and ('salad' not in str.lower() and ('wine' not in str.lower()))
    #print "                [", str.encode('ascii', 'ignore'), ']    ', result
     return result
 
@@ -29,8 +51,6 @@ all_section_desserts = []
 all_subsection_desserts = []
 all_contents_desserts = []
 
-#search each section and subsection for a name containing 'dessert' variations by calling function is_sugar.
-#once found, print name of restaurant, section or subsection name, and its contents.
 
 for venue in all_venues:
     if 'menus' in venue:
@@ -81,6 +101,15 @@ for venue in all_venues:
                                                 if 'price' in content:
                                                     print'                ', content['price'].encode('ascii', 'ignore')
                                             all_contents_desserts.append(content)
+
+# # print all_menu_desserts
+# # print all_section_desserts
+# print all_subsection_desserts
+# print all_contents_desserts
+
+        
+
+
 
 
 
